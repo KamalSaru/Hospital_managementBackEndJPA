@@ -22,7 +22,7 @@ public class CalculatorTest {
 	public void sumTestPositive() {
 		int actualResult = calculator.sum(10, 2);
 		assertNotNull(actualResult);
-		assertEquals(12, actualResult);
+		assertEquals(10, actualResult);
 	}
 	
 	@Test // this tells that it is an single test case

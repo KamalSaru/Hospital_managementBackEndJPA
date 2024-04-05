@@ -60,8 +60,8 @@ public class DoctorService {
 		doctorResponse.setEmail(doctor.getEmail());
 		doctorResponse.setSpecialization(doctor.getSpecialization().name());
 		return doctorResponse;
-
 	}
+
 
 	public DoctorResponse getDoctor(Long id) {
 		DoctorResponse doctorResponse = new DoctorResponse();
@@ -83,6 +83,7 @@ public class DoctorService {
 
 	}
 
+
 	public List<Doctor> getDoctorList() {
 		List<Doctor> doctorList = doctorDao.findAll();
 //		for(Doctor doc : doctorList) {
@@ -96,7 +97,8 @@ public class DoctorService {
 		
 		return doctorList;
 	}
-	
+
+
 	public List<Doctor> getDoctorListWithPagination(Integer pageNumber, Integer pageSize) {
 		Page<Doctor> doctorPage = doctorDao.findAll(PageRequest.of(pageNumber, pageSize,Sort.by("name").ascending()));
 		List<Doctor> doctorList = new ArrayList<>();

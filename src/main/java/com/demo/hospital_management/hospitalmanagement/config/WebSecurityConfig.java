@@ -25,7 +25,7 @@ import com.demo.hospital_management.hospitalmanagement.service.MyUserDeatilsServ
 import com.demo.hospital_management.hospitalmanagement.util.JwtUtil;
 
 
-
+/*
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -53,13 +53,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		return NoOpPasswordEncoder.getInstance();
 	}
 
-	@Override
+	//@Override
 	@Bean
 	public AuthenticationManager authenticationManagerBean() throws Exception {
 		return super.authenticationManagerBean();
 	}
 
-	@Override
+	//@Override
 	protected void configure(HttpSecurity httpSecurity) throws Exception {
 		
 		httpSecurity.csrf().disable().authorizeRequests().antMatchers("/auth/authenticate").permitAll()
@@ -71,3 +71,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 	}
 }
+
+ */
