@@ -2,6 +2,7 @@ package com.demo.hospital_management.hospitalmanagement.controller;
 
 import com.demo.hospital_management.hospitalmanagement.dao.DoctorDao;
 import com.demo.hospital_management.hospitalmanagement.enums.Specialization;
+import com.demo.hospital_management.hospitalmanagement.model.Doctor;
 import com.demo.hospital_management.hospitalmanagement.request.DoctorRequest;
 import com.demo.hospital_management.hospitalmanagement.response.BaseResponse;
 import com.demo.hospital_management.hospitalmanagement.response.DoctorResponse;
@@ -15,6 +16,9 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -56,6 +60,17 @@ public class DoctorControllerTest {
 		return doctorResponse;
 	}
 	
+	// this is the response object
+	private Doctor getDoctor() {
+		Doctor doctor = new Doctor();
+		doctor.setDoctorId(123L);
+		doctor.setName("yuwiwoms");
+		doctor.setEmail("tuiai123@gmail.com");
+		doctor.setMobile("9872389289229");
+		doctor.setSpecialization(Specialization.CARDIOLOGIST);
+		return doctor;
+	}
+
 	@Test
 	public void addDoctorTestPositive() {
 		Mockito.when(doctorService.addDoctor(Mockito.any())).thenReturn(getDoctorResponse());
@@ -86,4 +101,32 @@ public class DoctorControllerTest {
 		assertNotNull(actualResponse);
 	}
 
+	@Test
+	public void getDoctorBySpecializationTestPositive() {
+		List<Doctor> dcotorList = new ArrayList<>();
+		dcotorList.add(getDoctor());
+		Mockito.when(doctorDao.findByDoctorSpecializtion(Mockito.any())).thenReturn(dcotorList);
+		ResponseEntity<?> actualResponse = doctorController.getDoctorBySpecialization("CARDIOLOGIST");
+		assertNotNull(actualResponse);
+		assertEquals(dcotorList, actualResponse.getBody());
+	}
+	
+	@Test
+	public void getDoctorBySpecializationTestNegative() {
+		List<Doctor> dcotorList = new ArrayList<>();
+		dcotorList.add(getDoctor());
+		Mockito.when(doctorDao.findByDoctorSpecializtion(Mockito.any())).thenThrow(new RuntimeException());
+		ResponseEntity<?> actualResponse = doctorController.getDoctorBySpecialization("CARDIOLOGIST");
+		assertNotNull(actualResponse);
+	}
+	
+	@Test
+	public void getAllDoctorTestPositive() {
+		List<Doctor> dcotorList = new ArrayList<>();
+		dcotorList.add(getDoctor());
+		Mockito.when( doctorService.getDoctorList()).thenReturn(dcotorList);
+		ResponseEntity<List<Doctor>> actualResponse = doctorController.getAllDoctor();
+		assertNotNull(actualResponse);
+		assertEquals(dcotorList, actualResponse.getBody());
+	}
 }
